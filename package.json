@@ -2,9 +2,6 @@
   "name": "pokemon-battle",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": ">=21.0.0"
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@babylonjs/core": "^6.0.0",
+    "@babylonjs/loaders": "^6.0.0",
     "@react-three/drei": "^9.92.7",
     "@react-three/fiber": "^8.15.12",
     "child_process": "^1.0.2",
@@ -20,9 +19,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "three": "^0.160.0",
-    "lucide-react": "^0.303.0",
-    "@babylonjs/core": "^6.0.0",
-    "@babylonjs/loaders": "^6.0.0"
+    "lucide-react": "^0.303.0"
   },
   "devDependencies": {
     "@shadcn/ui": "^0.0.4",
@@ -34,8 +31,7 @@
     "eslint-config-next": "^14.1.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5",
-    "@types/babylonjs": "^2.4.1"
+    "typescript": "^5"
   }
 }
 
