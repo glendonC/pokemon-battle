@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { spawn, ChildProcess } from 'child_process';
 import path from 'path';
 
-export async function POST() {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const scriptPath = path.join(process.cwd(), 'full_pipeline.py');
     console.log('Starting Python script at:', scriptPath);
@@ -39,7 +39,7 @@ export async function POST() {
       );
     }
 
-    return new Promise((resolve) => {
+    return new Promise<NextResponse>((resolve) => {
       console.log(`Using Python command: ${pythonCommand}`);
       const pythonProcess: ChildProcess = spawn(pythonCommand, [scriptPath]);
       
@@ -69,10 +69,11 @@ export async function POST() {
 
       pythonProcess.on('close', (code: number | null) => {
         if (code !== 0) {
-          return resolve(NextResponse.json(
+          resolve(NextResponse.json(
             { error: 'Scanning failed' }, 
             { status: 500 }
           ));
+          return;
         }
 
         // Clean up the object name
@@ -87,7 +88,7 @@ export async function POST() {
         const normalizedName = normalizations[objectName] || objectName;
         console.log('Normalized name:', normalizedName);
 
-        return resolve(NextResponse.json({
+        resolve(NextResponse.json({
           success: true,
           objectName: normalizedName
         }));
@@ -102,3 +103,4 @@ export async function POST() {
     );
   }
 }
+
