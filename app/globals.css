@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -19,3 +25,186 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* 3D Transform Utilities */
+.transform-gpu {
+  transform: translate3d(0, 0, 0);
+}
+
+.rotate-y-15 {
+  transform: rotateY(15deg);
+}
+
+.rotate-y--15 {
+  transform: rotateY(-15deg);
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Float Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0) scaleX(-1); }
+  50% { transform: translateY(-10px) scaleX(-1); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateY(-5px); }
+  50% { transform: translateY(5px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 3s ease-in-out infinite;
+}
+
+/* Battle Log Colors */
+.log-system { color: #98FB98; }
+.log-player { color: #00FF00; }
+.log-enemy { color: #FF4444; }
+.log-damage { color: #FFA500; }
+.log-effect { color: #00FFFF; }
+.log-faint { color: #FF69B4; }
+
+/* Battle Effect Text */
+.battle-effect-text {
+  position: fixed;
+  font-size: 2.5rem;
+  font-weight: bold;
+  font-family: 'Arial Black', sans-serif;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0;
+  animation: effectText 1s ease-out forwards;
+  transform-origin: center;
+  letter-spacing: 1px;
+}
+
+/* Core Battle Animations */
+@keyframes effectText {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5) rotate(-5deg);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2) rotate(5deg);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(-50%, -80%) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -100%) scale(0.8) rotate(0deg);
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+@keyframes damageFlash {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(2) contrast(2); }
+}
+
+@keyframes recoil {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+/* Movement Animations */
+@keyframes lungeRight {
+  0%, 100% { transform: translateX(0) scaleX(-1); }
+  50% { transform: translateX(100px) scaleX(-1); }
+}
+
+@keyframes lungeLeft {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(-100px); }
+}
+
+/* Type-Based Effect Animations */
+@keyframes waterEffect {
+  0% { filter: brightness(1) hue-rotate(0deg); }
+  50% { filter: brightness(1.5) hue-rotate(180deg) saturate(2); }
+  100% { filter: brightness(1) hue-rotate(0deg); }
+}
+
+@keyframes fireEffect {
+  0% { filter: brightness(1) sepia(0); }
+  50% { filter: brightness(2) sepia(1) hue-rotate(-50deg) saturate(2); }
+  100% { filter: brightness(1) sepia(0); }
+}
+
+@keyframes electricEffect {
+  0%, 40%, 80% { filter: brightness(2) contrast(2) saturate(2); }
+  20%, 60%, 100% { filter: brightness(1) contrast(1); }
+}
+
+@keyframes iceEffect {
+  0% { filter: brightness(1) saturate(1); }
+  50% { filter: brightness(1.8) saturate(0) contrast(1.5) hue-rotate(180deg); }
+  100% { filter: brightness(1) saturate(1); }
+}
+
+@keyframes impactEffect {
+  0% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(0.9); filter: brightness(1.8) contrast(1.5); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+@keyframes shieldEffect {
+  0% { filter: brightness(1) opacity(1); }
+  50% { filter: brightness(2) opacity(0.7) hue-rotate(90deg) saturate(2); }
+  100% { filter: brightness(1) opacity(1); }
+}
+
+@keyframes psychicEffect {
+  0% { filter: hue-rotate(0deg) brightness(1); }
+  50% { filter: hue-rotate(180deg) brightness(1.8) saturate(2); }
+  100% { filter: hue-rotate(360deg) brightness(1); }
+}
+
+@keyframes lightEffect {
+  0% { filter: brightness(1) contrast(1); }
+  50% { filter: brightness(2.5) contrast(1.5) saturate(0.5); }
+  100% { filter: brightness(1) contrast(1); }
+}
+
+/* Animation Classes */
+.shake-animation { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+.damage-flash { animation: damageFlash 0.3s ease-in-out; }
+.recoil { animation: recoil 0.3s ease-out; }
+.lunge-right { animation: lungeRight 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+.lunge-left { animation: lungeLeft 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+
+/* Type Effect Classes */
+.water-splash { animation: waterEffect 0.6s ease-out; }
+.fire-burst { animation: fireEffect 0.5s ease-out; }
+.electric-shock { animation: electricEffect 0.3s ease-out; }
+.ice-freeze { animation: iceEffect 0.5s ease-out; }
+.impact-burst { animation: impactEffect 0.4s ease-out; }
+.shield-glow { animation: shieldEffect 0.7s ease-out; }
+.psychic-waves { animation: psychicEffect 0.6s ease-out; }
+.light-flash { animation: lightEffect 0.5s ease-out; }
+
+/* Charge Effects */
+.basic-hit-charge { filter: brightness(1.3); }
+.water-splash-charge { filter: brightness(1.2) hue-rotate(180deg); }
+.fire-burst-charge { filter: brightness(1.4) sepia(0.5); }
+.electric-shock-charge { filter: brightness(1.5) contrast(1.2); }
+.ice-freeze-charge { filter: brightness(1.3) saturate(0.5); }
+.impact-burst-charge { filter: brightness(1.4) contrast(1.3); }
+.shield-glow-charge { filter: brightness(1.2) opacity(0.9); }
+.psychic-waves-charge { filter: brightness(1.3) hue-rotate(90deg); }
+.light-flash-charge { filter: brightness(1.6); }
